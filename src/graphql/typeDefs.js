@@ -14,38 +14,35 @@ module.exports = gql`
   }
 
   type Mutation {
-    createUser(input: CreateUserInput!): LoginReturn!
+    createUser(input: UserInput!): CreateUserReturn!
     createPost(content: String!): CreatePostReturn!
     editPost(id: ID!, newContent: String!): EditPostReturn!
-    loginUser(email: String!, password: String!): LoginReturn!
+    loginUser(email: String!, password: String!): CreateUserReturn!
   }
 
   type CreatePostReturn {
-    post: Post
     error: Error
+    post: Post
+  }
+
+  type Error {
+    message: String!
+  }
+
+  type Post {
+    id: ID!
+    content: String!
   }
 
   type EditPostReturn {
-    post: Post
     error: Error
+    post: Post
   }
 
-  input CreateUserInput {
-    name: String!
-    email: String!
-    password: String!
-    birthday: String
-    concentration: String
-    hometown: String
-    house: String
-    gender: String
-    bio: String
-    picture: String
-    hobbies: [HobbyInput!]
-  }
-
-  input HobbyInput {
-    hobby: String!
+  type CreateUserReturn {
+    error: Error
+    user: User
+    token: String
   }
 
   type User {
@@ -61,18 +58,26 @@ module.exports = gql`
     picture: String
   }
 
-  type Post {
+  input UserInput {
+    name: String!
+    email: String!
+    password: String!
+    birthday: String
+    concentration: String
+    hometown: String
+    house: String
+    gender: String
+    bio: String
+    picture: String
+    hobbies: [HobbyInput!]
+  }
+
+  type Hobby {
     id: ID!
-    content: String!
+    hobby: String!
   }
 
-  type LoginReturn {
-    user: User
-    token: String
-    error: Error
-  }
-
-  type Error {
-    message: String
+  input HobbyInput {
+    hpbby: String!
   }
 `

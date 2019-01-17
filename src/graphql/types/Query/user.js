@@ -2,10 +2,15 @@ const User = require('../../../models/User')
 
 const userResolver = async (obj, args, context) => {
   // TODO: Write a resolver which returns a user given a user id.
+
+  const userReturn = await User.query().where('id', args.id)
+
+  return { userReturn }
 }
 
 const usersResolver = async (obj, args, context) => {
   const { substr, hometown, house, concentration, hobbies } = args
+
   /* TODO: Write a resolver which returns a list of all users.
 
   Once you're done, implement the following pieces of functionality one by one:
@@ -17,6 +22,15 @@ const usersResolver = async (obj, args, context) => {
     - concentration: include only users who have that concentration
     - hobbies: include only users who have indicated one of the hobbies in that list
   */
+
+  const usersList = await User.query()
+    .where('name', 'like', '%substr%')
+    .andWhere('hometown', hometown)
+    .andWhere('house', house)
+    .andWhere('concentation', concentration)
+    .whereIn('hobbies', hobbies)
+
+  return { usersList }
 }
 
 const resolver = {
