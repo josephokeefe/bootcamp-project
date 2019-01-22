@@ -64,6 +64,9 @@ module.exports = gql`
   type Post {
     id: ID!
     content: String!
+    userId: ID!
+    createdAt: String!
+    updatedAt: String!
   }
 
   type LoginReturn {
